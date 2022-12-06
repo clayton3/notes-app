@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.json.JSONArray
 
-class BookViewModel : ViewModel() {
+class NoteViewModel : ViewModel() {
 
-    val bookList: BookList by lazy {
-        BookList()
+    val noteList: NoteList by lazy {
+        NoteList()
     }
 
     private val selectedBook: MutableLiveData<Book>? by lazy {
@@ -49,9 +49,9 @@ class BookViewModel : ViewModel() {
     }
 
     fun updateBooks (books: JSONArray) {
-        bookList.clear()
+        noteList.clear()
         for (i in 0 until books.length()) {
-            bookList.add(Book(books.getJSONObject(i)))
+            noteList.add(Book(books.getJSONObject(i)))
         }
         notifyUpdatedBookList()
     }

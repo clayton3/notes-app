@@ -1,6 +1,6 @@
 package edu.temple.flossplayer
 
-class BookList {
+class NoteList {
 
     private val bookList : ArrayList<Book> by lazy {
         ArrayList()

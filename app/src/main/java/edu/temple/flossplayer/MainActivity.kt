@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.container2) == null
     }
 
-    private val bookViewModel : BookViewModel by lazy {
-        ViewModelProvider(this)[BookViewModel::class.java]
+    private val noteViewModel : NoteViewModel by lazy {
+        ViewModelProvider(this)[NoteViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,44 +33,44 @@ class MainActivity : AppCompatActivity() {
 
         // If we're switching from one container to two containers
         // clear BookPlayerFragment from container1
-        if (supportFragmentManager.findFragmentById(R.id.container1) is BookPlayerFragment) {
+        if (supportFragmentManager.findFragmentById(R.id.container1) is NotePlayerFragment) {
             supportFragmentManager.popBackStack()
         }
 
         // If this is the first time the activity is loading, go ahead and add a BookListFragment
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.container1, BookListFragment())
+                .add(R.id.container1, NoteListFragment())
                 .commit()
         } else
         // If activity loaded previously, there's already a BookListFragment
         // If we have a single container and a selected book, place it on top
-            if (isSingleContainer && bookViewModel.getSelectedBook()?.value != null) {
+            if (isSingleContainer && noteViewModel.getSelectedBook()?.value != null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container1, BookPlayerFragment())
+                    .replace(R.id.container1, NotePlayerFragment())
                     .setReorderingAllowed(true)
                     .addToBackStack(null)
                     .commit()
             }
 
         // If we have two containers but no BookPlayerFragment, add one to container2
-        if (!isSingleContainer && supportFragmentManager.findFragmentById(R.id.container2) !is BookPlayerFragment)
+        if (!isSingleContainer && supportFragmentManager.findFragmentById(R.id.container2) !is NotePlayerFragment)
             supportFragmentManager.beginTransaction()
-                .add(R.id.container2, BookPlayerFragment())
+                .add(R.id.container2, NotePlayerFragment())
                 .commit()
 
 
         // Respond to selection in portrait mode using flag stored in ViewModel
-        bookViewModel.getSelectedBook()?.observe(this){
-            if (!bookViewModel.hasViewedSelectedBook()) {
+        noteViewModel.getSelectedBook()?.observe(this){
+            if (!noteViewModel.hasViewedSelectedBook()) {
                 if (isSingleContainer) {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container1, BookPlayerFragment())
+                        .replace(R.id.container1, NotePlayerFragment())
                         .setReorderingAllowed(true)
                         .addToBackStack(null)
                         .commit()
                 }
-                bookViewModel.markSelectedBookViewed()
+                noteViewModel.markSelectedBookViewed()
             }
         }
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         // BackPress clears the selected book
-        bookViewModel.clearSelectedBook()
+        noteViewModel.clearSelectedBook()
         super.onBackPressed()
     }
 
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 searchBooks(it)
 
                 // Unselect previous book selection
-                bookViewModel.clearSelectedBook()
+                noteViewModel.clearSelectedBook()
 
                 // Remove any unwanted DisplayFragments instances from the stack
                 supportFragmentManager.popBackStack()
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     private fun searchBooks(searchTerm: String) {
         requestQueue.add(
             JsonArrayRequest(searchURL + searchTerm,
-                { bookViewModel.updateBooks(it) },
+                { noteViewModel.updateBooks(it) },
                 { Toast.makeText(this, it.networkResponse.toString(), Toast.LENGTH_SHORT).show() })
         )
     }

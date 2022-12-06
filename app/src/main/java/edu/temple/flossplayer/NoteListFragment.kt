@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class BookListFragment : Fragment() {
+class NoteListFragment : Fragment() {
 
-    private lateinit var bookViewModel : BookViewModel
+    private lateinit var noteViewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bookViewModel = ViewModelProvider(requireActivity())[BookViewModel::class.java]
+        noteViewModel = ViewModelProvider(requireActivity())[NoteViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -36,25 +36,25 @@ class BookListFragment : Fragment() {
         val onClick: (Book) -> Unit = {
             // Update the ViewModel
                 book: Book ->
-            bookViewModel.setSelectedBook(book)
+            noteViewModel.setSelectedBook(book)
             // Inform the activity of the selection so as to not have the event replayed
             // when the activity is restarted
         }
 
         with(view as RecyclerView) {
-            layoutManager = LinearLayoutManager(requireActivity())
+            layoutManager = GridLayoutManager(requireActivity(), 2)
 
-            adapter = BookListAdapter(bookViewModel.bookList, onClick)
+            adapter = BookListAdapter(noteViewModel.noteList, onClick)
 
-            bookViewModel.getUpdatedBookList().observe(requireActivity()) {
+            noteViewModel.getUpdatedBookList().observe(requireActivity()) {
                 adapter?.notifyDataSetChanged()
             }
         }
 
     }
 
-    class BookListAdapter (_bookList: BookList, _onClick: (Book) -> Unit) : RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
-        private val bookList = _bookList
+    class BookListAdapter (_noteList: NoteList, _onClick: (Book) -> Unit) : RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
+        private val bookList = _noteList
         private val onClick = _onClick
 
         inner class BookViewHolder (layout : View): RecyclerView.ViewHolder (layout) {

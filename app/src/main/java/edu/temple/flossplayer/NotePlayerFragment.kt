@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class BookPlayerFragment : Fragment() {
+class NotePlayerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,7 +21,7 @@ class BookPlayerFragment : Fragment() {
         if (childFragmentManager.findFragmentById(R.id.book_fragment_container) == null)
             childFragmentManager
                 .beginTransaction()
-                .add(R.id.book_fragment_container, BookFragment())
+                .add(R.id.book_fragment_container, NoteFragment())
                 .commit()
     }
 

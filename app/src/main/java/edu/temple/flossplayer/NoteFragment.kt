@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 
-class BookFragment : Fragment() {
+class NoteFragment : Fragment() {
     private lateinit var titleTextView: TextView
     private lateinit var authorTextView: TextView
     private lateinit var coverImageView: ImageView
@@ -25,7 +25,7 @@ class BookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewModelProvider(requireActivity())[BookViewModel::class.java]
+        ViewModelProvider(requireActivity())[NoteViewModel::class.java]
             .getSelectedBook()?.observe(requireActivity()) {updateBook(it)}
     }
 
