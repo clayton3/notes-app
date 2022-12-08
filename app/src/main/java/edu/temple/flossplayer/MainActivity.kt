@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private val searchURL = "https://kamorris.com/lab/flossplayer/search.php?query="
     private lateinit var addButton: FloatingActionButton
+    private lateinit var baseNotes: Array<NoteObject>
 
     private val isSingleContainer : Boolean by lazy{
         findViewById<View>(R.id.container2) == null
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        baseNotes = makeNoteArr()
 
         addButton = findViewById(R.id.floatingActionButton)
         // If we're switching from one container to two containers
@@ -74,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.searchImageButton).setOnClickListener {
             onSearchRequested()
         }
+
+        searchNotes("")
     }
 
     override fun onBackPressed() {
@@ -87,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
         if (Intent.ACTION_SEARCH == intent!!.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also {
-                searchBooks(it)
+                searchNotes(it)
 
                 // Unselect previous book selection
                 noteViewModel.clearSelectedNote()
@@ -108,7 +113,17 @@ class MainActivity : AppCompatActivity() {
         return noteList as Array<NoteObject>
     }
 
-    private fun searchBooks(searchTerm: String) {
-        noteViewModel.updateNotes(makeNoteArr())
+    private fun searchNotes(searchTerm: String) {
+        val filteredNotes = arrayListOf<NoteObject>()
+
+        for(note in baseNotes)
+            if(note.title.contains(searchTerm) || searchTerm.equals(""))
+                filteredNotes.add(note)
+
+        val filterArr = arrayOfNulls<NoteObject>(filteredNotes.size)
+        for(i in 0 until filterArr.size)
+            filterArr[i] = filteredNotes[i]
+
+        noteViewModel.updateNotes(filterArr as Array<NoteObject>)
     }
 }
