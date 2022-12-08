@@ -12,7 +12,7 @@ class NotePlayerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_book_player, container, false)
+        return inflater.inflate(R.layout.fragment_note_player, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,6 +24,4 @@ class NotePlayerFragment : Fragment() {
                 .add(R.id.book_fragment_container, NoteFragment())
                 .commit()
     }
-
-
 }

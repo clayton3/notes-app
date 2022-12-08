@@ -14,7 +14,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchImageButton"
-        app:layout_constraintWidth_percent=".35" />
+        app:layout_constraintWidth_percent=".35"
+        android:name="edu.temple.flossplayer.NoteListFragment"
+        tools:layout="@layout/notelist_items_layout" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container2"
@@ -26,7 +28,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/container1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:name="edu.temple.flossplayer.NotePlayerFragment"
+        tools:layout="@layout/fragment_note_player" />
 
     <ImageButton
         android:id="@+id/searchImageButton"
@@ -35,6 +39,7 @@
         app:layout_constraintEnd_toStartOf="@+id/container2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

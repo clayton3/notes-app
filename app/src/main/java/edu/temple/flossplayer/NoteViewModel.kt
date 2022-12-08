@@ -3,7 +3,6 @@ package edu.temple.flossplayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.json.JSONArray
 
 class NoteViewModel : ViewModel() {
 
@@ -11,7 +10,7 @@ class NoteViewModel : ViewModel() {
         NoteList()
     }
 
-    private val selectedBook: MutableLiveData<Book>? by lazy {
+    private val selectedNoteObject: MutableLiveData<NoteObject>? by lazy {
         MutableLiveData()
     }
 
@@ -19,51 +18,51 @@ class NoteViewModel : ViewModel() {
     // care about the data it's storing. It's just a means to
     // have an observer be notified that something (new books have been added)
     // has happened
-    private val updatedBookList : MutableLiveData<Int> by lazy {
+    private val updatedNoteList : MutableLiveData<Int> by lazy {
         MutableLiveData()
     }
 
     // Flag to determine if one-off event should fire
-    private var viewedBook = false
+    private var viewedNote = false
 
-    fun getSelectedBook(): LiveData<Book>? {
-        return selectedBook
+    fun getSelectedNote(): LiveData<NoteObject>? {
+        return selectedNoteObject
     }
 
-    fun setSelectedBook(selectedBook: Book) {
-        viewedBook = false
-        this.selectedBook?.value = selectedBook
+    fun setSelectedNote(selectedNoteObject: NoteObject) {
+        viewedNote = false
+        this.selectedNoteObject?.value = selectedNoteObject
     }
 
-    fun clearSelectedBook () {
-        viewedBook = true
-        selectedBook?.value = null
+    fun clearSelectedNote () {
+        viewedNote = true
+        selectedNoteObject?.value = null
     }
 
-    fun markSelectedBookViewed () {
-        viewedBook = true
+    fun markSelectedNoteViewed () {
+        viewedNote = true
     }
 
-    fun hasViewedSelectedBook() : Boolean {
-        return viewedBook
+    fun hasViewedSelectedNote() : Boolean {
+        return viewedNote
     }
 
-    fun updateBooks (books: JSONArray) {
+    fun updateNotes (noteObjects: Array<NoteObject>) {
         noteList.clear()
-        for (i in 0 until books.length()) {
-            noteList.add(Book(books.getJSONObject(i)))
+        for (i in 0 until noteObjects.size) {
+            noteList.add(noteObjects[i])
         }
-        notifyUpdatedBookList()
+        notifyUpdatedNoteList()
     }
 
     // The indirect observable for those that want to know when
     // the book list has changed
-    fun getUpdatedBookList() : LiveData<out Any> {
-        return updatedBookList
+    fun getUpdatedNoteList() : LiveData<out Any> {
+        return updatedNoteList
     }
 
     // A trivial update used to indirectly notify observers that the Booklist has changed
-    private fun notifyUpdatedBookList() {
-        updatedBookList.value = updatedBookList.value?.plus(1)
+    private fun notifyUpdatedNoteList() {
+        updatedNoteList.value = updatedNoteList.value?.plus(1)
     }
 }

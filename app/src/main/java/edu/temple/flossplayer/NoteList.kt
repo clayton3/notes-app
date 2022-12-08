@@ -2,23 +2,23 @@ package edu.temple.flossplayer
 
 class NoteList {
 
-    private val bookList : ArrayList<Book> by lazy {
+    private val noteObjectList : ArrayList<NoteObject> by lazy {
         ArrayList()
     }
 
-    fun add(book: Book) {
-        bookList.add(book)
+    fun add(noteObject: NoteObject) {
+        noteObjectList.add(noteObject)
     }
 
-    fun remove (book: Book) {
-        bookList.remove(book)
+    fun remove (noteObject: NoteObject) {
+        noteObjectList.remove(noteObject)
     }
 
     fun clear() {
-        bookList.clear()
+        noteObjectList.clear()
     }
 
-    operator fun get(index: Int) = bookList[index]
+    operator fun get(index: Int) = noteObjectList[index]
 
-    fun size() = bookList.size
+    fun size() = noteObjectList.size
 }
