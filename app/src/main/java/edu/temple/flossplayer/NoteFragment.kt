@@ -45,13 +45,12 @@ class NoteFragment : Fragment() {
             title = titleTextView.text.toString()
             body = bodyTextView.text.toString()
         }
-        Log.d("Test", "Reached!")
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         noteViewModel.getSelectedNote()?.observe(requireActivity()) { saveToNote(it) }
 
-        super.onDestroy()
+        super.onDestroyView()
     }
 
 }

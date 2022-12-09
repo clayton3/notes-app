@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         baseNotes = makeNoteArr()
+        Log.d("Test", "Notes")
 
         addButton = findViewById(R.id.floatingActionButton)
         // If we're switching from one container to two containers
@@ -117,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         val filteredNotes = arrayListOf<NoteObject>()
 
         for(note in baseNotes)
-            if(note.title.contains(searchTerm) || searchTerm.equals(""))
+            if(note.title.lowercase().contains(searchTerm.lowercase()) || searchTerm.equals(""))
                 filteredNotes.add(note)
 
         val filterArr = arrayOfNulls<NoteObject>(filteredNotes.size)
